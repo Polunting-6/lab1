@@ -1,14 +1,14 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -Iinclude -MMD -MP
 
-SRCS = src/main.c src/add.c src/sub.c src/utility/stats.c
-OBJS = build/main.o build/add.o build/sub.o build/utility/stats.o
+SRCS = src/main.c src/add.c src/sub.c src/utility/stats.c src/mul.c
+OBJS = build/main.o build/add.o build/sub.o build/utility/stats.o build/mul.o
 
 .PHONY: all clean test
 
-all: build/prog
+all: build/calc
 
-build/prog: $(OBJS) | build
+build/calc: $(OBJS) | build
 	$(CC) $(CFLAGS) $^ -o $@
 
 build/%.o: src/%.c | build
@@ -18,6 +18,14 @@ build/%.o: src/%.c | build
 build/utility/%.o: src/utility/%.c | build
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+build/mul.o: src/mul.c include/mul.h
+
+src/mul.c include/mul.h &: build/genmul
+	./build/genmul
+
+build/genmul: tools/genmul.c | build
+	$(CC) $(CFLAGS) $< -o $@
 
 build:
 	mkdir -p build
@@ -29,3 +37,4 @@ test: build.prog
 
 clean:
 	rm -rf build
+	rm -f src/mul.c include/mul.h
