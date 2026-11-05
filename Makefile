@@ -15,7 +15,7 @@ build/%.o: src/%.c | build
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-build/util/%.o: src/util/%.c | build
+build/utility/%.o: src/utility/%.c | build
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
