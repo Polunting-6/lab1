@@ -2,7 +2,7 @@ CC = gcc
 
 CFLAGS ?= -O2
 
-ALL_CFLAGS = -Wall -Wextra $(CFLAGS) -Iinclude -MMD -MP
+override CFLAGS += -Wall -Wextra -Iinclude -MMD -MP
 
 SRCS = src/main.c src/add.c src/sub.c src/utility/stats.c src/mul.c
 OBJS = build/main.o build/add.o build/sub.o build/utility/stats.o build/mul.o
@@ -12,15 +12,15 @@ OBJS = build/main.o build/add.o build/sub.o build/utility/stats.o build/mul.o
 all: build/prog
 
 build/prog: $(OBJS) | build
-	$(CC) $(ALL_CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 build/%.o: src/%.c | build
 	@mkdir -p $(dir $@)
-	$(CC) $(ALL_CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 build/utility/%.o: src/utility/%.c | build
 	@mkdir -p $(dir $@)
-	$(CC) $(ALL_CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 build/mul.o: src/mul.c include/mul.h
 
@@ -28,7 +28,7 @@ src/mul.c include/mul.h &: build/genmul
 	./build/genmul
 
 build/genmul: tools/genmul.c | build
-	$(CC) $(ALL_CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 build:
 	mkdir -p build
