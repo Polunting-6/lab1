@@ -6,9 +6,9 @@ OBJS = build/main.o build/add.o build/sub.o build/utility/stats.o build/mul.o
 
 .PHONY: all clean test
 
-all: build/calc
+all: build/prog
 
-build/calc: $(OBJS) | build
+build/prog: $(OBJS) | build
 	$(CC) $(CFLAGS) $^ -o $@
 
 build/%.o: src/%.c | build
@@ -32,7 +32,7 @@ build:
 
 -include $(OBJS:.o=.d)
 
-test: build.prog
+test: build/prog
 	./tests/test.sh
 
 clean:
