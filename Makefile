@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -O2 -Iinclude
+CFLAGS = -Wall -Wextra -O2 -Iinclude -MMD -MP
 
 SRCS = src/main.c src/add.c src/sub.c src/utility/stats.c
 OBJS = build/main.o build/add.o build/sub.o build/utility/stats.o
